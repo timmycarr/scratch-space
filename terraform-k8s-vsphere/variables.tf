@@ -1,31 +1,51 @@
 # Variables
-variable "vsphere_vcenter" {}
 
-variable "vsphere_user" {}
-variable "vsphere_password" {}
-variable "vsphere_datacenter" {}
+// VMware vSphere IP address
+variable "vsphere_vcenter" {
+  type = "string"
+}
 
+// VMware vCenter username
+variable "vsphere_user" {
+  type = "string"
+}
+
+// VMware vCenter password
+variable "vsphere_password" {
+  type = "string"
+}
+
+// vSphere datacenter name
+variable "vsphere_datacenter" {
+  type = "string"
+}
+
+// Cluster where workload will be provisioned to
 variable "vsphere_cluster" {
   type = "string"
 }
 
-variable "root_password" {}
+// Root password for the VM instances spun up
+variable "root_password" {
+  type = "string"
+}
 
-# Name of the virtual port group for the deployment
+// Name of the virtual port group for the deployment
 variable "network_name" {
   type = "string"
 }
 
-# Name of the vSphere Template that we'll use for the deployment
+// Name of the vSphere Template that we'll use for the deployment
 variable "template_name" {
   type = "string"
 }
 
-# Name of the Datastore to place the clone VM on
+// Name of the Datastore to place the clone VM on
 variable "datastore_name" {
   type = "string"
 }
 
+// Virtual Machine name prefix
 variable "virtual_machine_name_prefix" {
   type = "string"
 }
