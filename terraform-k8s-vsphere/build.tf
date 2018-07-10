@@ -24,7 +24,6 @@ resource "vsphere_virtual_machine" "vm" {
 
   clone {
     template_uuid = "${data.vsphere_virtual_machine.template.id}"
-    linked_clone = true
 
     customize {
       linux_options {
