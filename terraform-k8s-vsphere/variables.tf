@@ -77,3 +77,7 @@ variable "virtual_machine_gateway" {
 variable "virtual_machine_dns_servers" {
   type = "list"
 }
+
+variable "number_instances" {
+  type = "string"
+}
