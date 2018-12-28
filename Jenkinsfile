@@ -1,45 +1,42 @@
 pipeline {
+  options {
+      ansiColor('xterm')
+    }   
   agent {
-    docker {
-      image 'hashicorp/terraform:light'
-    }
+    node {
+      label 'master'
+    }  
   }
-
   stages {
-
-    stage('Checkout') {
+    stage('checkout') {
       steps {
         checkout scm
-        sh 'mkdir -p creds' 
-        sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/serviceaccount.json'
+        sh 'docker pull hashicorp/terraform:light'
       }
     }
-
-    stage('TF Plan') {
+    stage('init') {
       steps {
-        container('terraform') {
-          sh 'terraform init'
-          sh 'terraform plan -out myplan'
-        }
-      }      
-    }
-
-    stage('Approval') {
-      steps {
-        script {
-          def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
-        }
+        sh 'docker run -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light init'
       }
     }
-
-    stage('TF Apply') {
+    stage('plan') {
       steps {
-        container('terraform') {
-          sh 'terraform apply -input=false myplan'
-        }
+        sh 'docker run -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light plan'
       }
     }
-
-  } 
-
+    stage('approval') {
+      options {
+        timeout(time: 1, unit: 'HOURS') 
+      }
+      steps {
+        input 'approve the plan to proceed and apply'
+      }
+    }
+    stage('apply') {
+      steps {
+        sh 'docker run -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light apply -auto-approve'
+        cleanWs()
+      }
+    }
+  }
 }
