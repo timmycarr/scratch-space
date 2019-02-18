@@ -4,13 +4,13 @@ vsphere_user = "administrator@vsphere.local"
 
 vsphere_datacenter = "lab"
 
-vsphere_cluster = "nuc"
+vsphere_cluster = "prod"
 
-network_name = "nuc-prod"
+network_name = "produciton"
 
-template_name = "CENT7-KUBE-NUC"
+template_name = "UBUNTU-1604-PROD"
 
-datastore_name = "NUC-VSAN"
+datastore_name = "PROD-VSAN"
 
 virtual_machine_name_prefix = "kube"
 

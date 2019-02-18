@@ -18,6 +18,6 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_virtual_machine" "template" {
-  name          = "CENT7-KUBE-NUC"
+  name          = "UBUNTU-1604-PROD"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
