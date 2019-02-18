@@ -21,6 +21,11 @@ pipeline {
         sh 'docker run -e TF_VAR_vsphere_password -e TF_VAR_root_password -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light init'
       }
     }
+    stage('new workspace') {
+      steps {
+        sh 'docker run -e TF_VAR_vsphere_password -e TF_VAR_root_password -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light workspace new lab'
+      }
+    }
     stage('plan') {
       steps {
         sh 'docker run -e TF_VAR_vsphere_password -e TF_VAR_root_password -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light plan'
