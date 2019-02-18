@@ -18,12 +18,12 @@ pipeline {
     }
     stage('init') {
       steps {
-        sh 'docker run -w /app -v /root/.aws:/root/.aws -e TF_VAR_vsphere_password -e TF_VAR_root_password -v `pwd`:/app hashicorp/terraform:light init'
+        sh 'docker run -e TF_VAR_vsphere_password -e TF_VAR_root_password -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light init'
       }
     }
     stage('plan') {
       steps {
-        sh 'docker run -w /app -v /root/.aws:/root/.aws -v -e TF_VAR_vsphere_password -e TF_VAR_root_password `pwd`:/app hashicorp/terraform:light plan'
+        sh 'docker run -e TF_VAR_vsphere_password -e TF_VAR_root_password -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light plan'
       }
     }
     stage('approval') {
@@ -36,7 +36,7 @@ pipeline {
     }
     stage('apply') {
       steps {
-        sh 'docker run -w /app -v /root/.aws:/root/.aws -v -e TF_VAR_vsphere_password -e TF_VAR_root_password `pwd`:/app hashicorp/terraform:light apply -auto-approve'
+        sh 'docker run -e TF_VAR_vsphere_password -e TF_VAR_root_password -w /app -v /root/.aws:/root/.aws -v  `pwd`:/app hashicorp/terraform:light apply -auto-approve'
         cleanWs()
       }
     }
