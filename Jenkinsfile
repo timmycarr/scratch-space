@@ -6,8 +6,8 @@ pipeline {
     }  
   }
    environment {
-    var.root_password    = credentials('jenkins-template-root-password')
-    var.vsphere_password = credentials('jenkins-vsphere-password')
+    TF_VAR_root_password    = credentials('jenkins-template-root-password')
+    TF_VAR_vsphere_password = credentials('jenkins-vsphere-password')
   }
   stages {
     stage('checkout') {
