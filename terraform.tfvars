@@ -6,7 +6,7 @@ vsphere_datacenter = "lab"
 
 vsphere_cluster = "prod"
 
-network_name = "produciton"
+network_name = "production"
 
 template_name = "UBUNTU-1604-PROD"
 
